@@ -110,7 +110,7 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
         print("Seniors parsed")
 
     except FileNotFoundError:
-        warnings.warn("senior directory not found (should be named '12'")
+        warnings.warn("senior directory not found (should be named '12')")
 
 
 # EMBEDDING
@@ -151,6 +151,6 @@ if __name__ == "__main__":
         args.new_img_dir = args.img_dir
 
     # ACTUAL STUFF
-    people = parse_index(args.index_path)
-    rename_imgs(args.img_dir, get_info(args.filename_type, people), new_img_dir=args.new_img_dir)
+    # people = parse_index(args.index_path)
+    # rename_imgs(args.img_dir, get_info(args.filename_type, people), new_img_dir=args.new_img_dir)
     embed(args.new_img_dir, args.dump_path, verify=args.verify)
