@@ -49,9 +49,9 @@ def parse_index(index_path):
 
             img_path = os.path.join(person[INDEXES["grade"]], person[INDEXES["img"]])
             name = person[INDEXES["first_name"]].lower() + "_" + person[INDEXES["last_name"]].lower()
-            id = person[INDEXES["id"]]
+            student_id = person[INDEXES["id"]]
 
-            people[img_path] = [id, name]
+            people[img_path] = [student_id, name]
 
     return people
 
