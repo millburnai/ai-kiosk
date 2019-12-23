@@ -14,7 +14,7 @@ import re
 import warnings
 
 from aisecurity import FaceNet
-from aisecurity.utils.dataflow import dump_embeds, retrieve_embeds
+from aisecurity.data.dataflow import dump_embeds, retrieve_embeds
 from aisecurity.utils.paths import CONFIG_HOME
 
 
@@ -52,6 +52,7 @@ def parse_index(index_path):
             student_id = person[INDEXES["id"]]
 
             people[img_path] = [student_id, name]
+            print(people[img_path])
 
     return people
 
@@ -80,14 +81,14 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
     # underclassmen
     for img_path in identifiers:
         if "_" not in img_path:
-            try:
-                if new_img_dir is not None:
-                    new_path = os.path.join(new_img_dir, img_path.split("/")[0], identifiers[img_path] + ".jpg")
-                else:
-                    new_path = os.path.join(img_path.split("/")[0], identifiers[img_path] + ".jpg")
-                os.rename(img_path, new_path)
-            except FileNotFoundError:
-                print("{} not found".format(img_path))
+            if new_img_dir is not None:
+                print(new_img_dir+"/"+img_path.split("/")[0]+"/"+identifiers[img_path] + ".jpg")
+                new_path = os.mkdir(new_img_dir+"/"+img_path.split("/")[0]+"/"+identifiers[img_path] + ".jpg")
+                print(new_path)
+            else:
+                new_path = os.path.join(img_path.split("/")[0], identifiers[img_path] + ".jpg")
+            os.rename(img_path, new_path)
+                #print("{} not found".format(img_path))
 
     print("Underclassmen parsed")
 
@@ -117,9 +118,14 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
 def embed(img_dir, dump_path, verify=False):
     facenet = FaceNet(CONFIG_HOME + "/models/ms_celeb_1m.h5")
     for dir in os.listdir(img_dir):
+        print(dir)
         if os.path.isdir(os.path.join(img_dir, dir)):
+            print("dumdum")
             dump_embeds(facenet, os.path.join(img_dir, dir), dump_path,
                         full_overwrite=True, ignore_encrypt="embeddings")
+
+            print("oops")
+    print(os.listdir(img_dir))
 
     if verify:
         print("Running facial recognition with new data to verify")
@@ -151,6 +157,6 @@ if __name__ == "__main__":
         args.new_img_dir = args.img_dir
 
     # ACTUAL STUFF
-    # people = parse_index(args.index_path)
-    # rename_imgs(args.img_dir, get_info(args.filename_type, people), new_img_dir=args.new_img_dir)
+    people = parse_index(args.index_path)
+    rename_imgs(args.img_dir, get_info(args.filename_type, people), new_img_dir=args.new_img_dir)
     embed(args.new_img_dir, args.dump_path, verify=args.verify)
