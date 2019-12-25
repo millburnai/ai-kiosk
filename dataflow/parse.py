@@ -52,7 +52,6 @@ def parse_index(index_path):
             student_id = person[INDEXES["id"]]
 
             people[img_path] = [student_id, name]
-            print(people[img_path])
 
     return people
 
@@ -76,19 +75,21 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
         matches = re.finditer('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)', string)
         return [m.group(0) for m in matches]
 
+    assert new_img_dir is not None, "please specify a new_img_dir for backup concerns"
     os.chdir(img_dir)
 
     # underclassmen
     for img_path in identifiers:
         if "_" not in img_path:
-            if new_img_dir is not None:
-                print(new_img_dir+"/"+img_path.split("/")[0]+"/"+identifiers[img_path] + ".jpg")
-                new_path = os.mkdir(new_img_dir+"/"+img_path.split("/")[0]+"/"+identifiers[img_path] + ".jpg")
-                print(new_path)
-            else:
-                new_path = os.path.join(img_path.split("/")[0], identifiers[img_path] + ".jpg")
-            os.rename(img_path, new_path)
-                #print("{} not found".format(img_path))
+            try:
+                if new_img_dir is not None:
+                    new_path = os.path.join(new_img_dir, img_path.split("/")[0], identifiers[img_path] + ".jpg")
+                    shutil.copy(img_path, new_path)
+                else:
+                    new_path = os.path.join(img_path.split("/")[0], identifiers[img_path] + ".jpg")
+                    os.rename(img_path, new_path)
+            except FileNotFoundError:
+                print("{} not found".format(img_path))
 
     print("Underclassmen parsed")
 
@@ -103,10 +104,10 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
 
                 if new_img_dir is not None:
                     new_path = os.path.join(new_img_dir, "12", name)
+                    shutil.copy(img_path, new_path)
                 else:
                     new_path = os.path.join(img_dir, "12", name)
-
-                os.rename(img_path, new_path)
+                    os.rename(img_path, new_path)
 
         print("Seniors parsed")
 
@@ -117,15 +118,10 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
 # EMBEDDING
 def embed(img_dir, dump_path, verify=False):
     facenet = FaceNet(CONFIG_HOME + "/models/ms_celeb_1m.h5")
-    for dir in os.listdir(img_dir):
-        print(dir)
-        if os.path.isdir(os.path.join(img_dir, dir)):
-            print("dumdum")
-            dump_embeds(facenet, os.path.join(img_dir, dir), dump_path,
-                        full_overwrite=True, ignore_encrypt="embeddings")
-
-            print("oops")
-    print(os.listdir(img_dir))
+    for obj in os.listdir(img_dir):
+        if os.path.isdir(os.path.join(img_dir, obj)):
+            dump_embeds(facenet, os.path.join(img_dir, obj), dump_path,
+                        full_overwrite=True, ignore_encrypt="embeddings", mode="a")
 
     if verify:
         print("Running facial recognition with new data to verify")
@@ -148,7 +144,8 @@ if __name__ == "__main__":
     parser.add_argument("--img_dir", help="path to image directory", type=str)
     parser.add_argument("--new_img_dir", help="path to new image directory (default: [img_dir])", type=str)
     parser.add_argument("--dump_path", help="path to JSON file", type=str)
-    parser.add_argument("--filename_type", help="name images using names or IDs", type=str)
+    parser.add_argument("--filename_type", help="name images using names or IDs (default: names)", type=str,
+                        default="names")
     parser.add_argument("--verify", help="run facial recognition with new data", type=to_bool)
 
     args = parser.parse_args()
