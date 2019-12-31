@@ -19,7 +19,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--img_dir", help="path to image directory", type=str)
     parser.add_argument("--dump_path", help="path to JSON file", type=str)
-    parser.add_argument("--verify", help="run facial recognition with new data", type=to_bool, default=False)
+    parser.add_argument("--verify", help="run facial recognition with new data", type=bool, default=False)
+    parser.add_argument("--dropbox_key", help="access key for dropbox account", type=str)
 
     def verify_data(dump_path):
         print("Running facial recognition with new data to verify")
@@ -55,6 +56,8 @@ if __name__ == "__main__":
             verify_data(dump_path)
 
         send_to_dropbox()
+
+    args = parser.parse_args()
 
     embed(args.img_dir, args.dump_path, args.verify)
 
