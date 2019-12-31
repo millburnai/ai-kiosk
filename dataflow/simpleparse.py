@@ -23,9 +23,8 @@ if __name__ == "__main__":
     parser.add_argument("--dropbox_key", help="access key for dropbox account", type=str)
 
     def verify_data(dump_path):
-        print("Running facial recognition with new data to verify")
         facenet.set_data(retrieve_embeds(dump_path, encrypted=None))
-        input("Verify data: press enter")
+        input("Running facial recognition with new data to verify: press enter")
         facenet.real_time_recognize(logging=None, pre_recorded_file='/Users/michaelpilarski/Desktop/test_movie.mov')
 
     def send_to_dropbox():
@@ -39,16 +38,11 @@ if __name__ == "__main__":
         dict_list = {}
         x = 0
         for dir in os.listdir(img_dir):
-            print(dir)
             if os.path.isdir(os.path.join(img_dir, dir)):
-                print("dumdum")
                 encrypted_data, no_faces = dump_embeds(facenet, os.path.join(img_dir, dir), dump_path,
                             full_overwrite=True, mode=("w+" if x == 0 else "a+"), ignore_encrypt="all")
                 dict_list.update(encrypted_data)
-                print("oops")
                 x+=1
-
-        print(os.listdir(img_dir))
         with open(dump_path, 'w+') as json_file:
             json.dump(dict_list, json_file, indent=4, ensure_ascii=False)
 
