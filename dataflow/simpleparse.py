@@ -1,19 +1,38 @@
+"""
+
+"dataflow/simpleparse.py"
+
+Data parsing?
+
+"""
+
+import argparse
+from contextlib import contextmanager
+import signal
+
+# TIME LIMIT
+# ... why do we need this?
+class TimeoutException(Exception): pass
+
+@contextmanager
+def time_limit(seconds):
+    def signal_handler(signum, frame):
+        raise TimeoutException("Timed out!")
+
+    signal.signal(signal.SIGALRM, signal_handler)
+    signal.alarm(seconds)
+
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+
+
 if __name__ == "__main__":
-
-    import os
-    import json
-    import argparse
-    import functools
-    import os
-    import shutil
-    import re
-    import warnings
-
     from aisecurity import FaceNet
     from aisecurity.data.dataflow import dump_embeds, retrieve_embeds
     from aisecurity.utils.paths import CONFIG_HOME
     from aisecurity.privacy.encryptions import *
-    from aisecurity.utils.misc import time_limit, TimeoutException
 
     facenet = FaceNet(CONFIG_HOME + "/models/ms_celeb_1m.h5")
 
