@@ -19,13 +19,13 @@ sudo bash tensorflow.sh
 sudo apt install python3-opencv
 sudo apt install python3-scipy
 sudo apt install python3-sklearn
-sudo python3 -m pip install keras pycryptodome
+sudo python3 -m pip install keras pycryptodome tqdm
 
 # ----- Hardware dependencies -----
 sudo python3 -m pip install adafruit-circuitpython-charlcd
 
 # ----- Database dependencies -----
-sudo python3 -m pip install Pyrebase requests
+sudo python3 -m pip install Pyrebase requests mysql-connector-python
 
 # ----- Facial recognition and detection -----
 sudo python3 -m pip install mtcnn --no-dependencies --user
