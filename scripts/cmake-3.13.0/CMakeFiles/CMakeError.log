@@ -1,0 +1,193 @@
+Determining if the environ exist failed with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_1b279/fast"
+make -f CMakeFiles/cmTC_1b279.dir/build.make CMakeFiles/cmTC_1b279.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1b279.dir/CheckSymbolExists.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_1b279.dir/CheckSymbolExists.c.o   -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘environ’ undeclared (first use in this function)
+   return ((int*)(&environ))[argc];
+                   ^~~~~~~
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+CMakeFiles/cmTC_1b279.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_1b279.dir/CheckSymbolExists.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_1b279.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_1b279/fast' failed
+make: *** [cmTC_1b279/fast] Error 2
+
+File /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef environ
+  return ((int*)(&environ))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3dd93/fast"
+make -f CMakeFiles/cmTC_3dd93.dir/build.make CMakeFiles/cmTC_3dd93.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3dd93.dir/CheckSymbolExists.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_3dd93.dir/CheckSymbolExists.c.o   -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_3dd93
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTC_3dd93.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_3dd93.dir/CheckSymbolExists.c.o  -o cmTC_3dd93 
+CMakeFiles/cmTC_3dd93.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x14): undefined reference to `pthread_create'
+CheckSymbolExists.c:(.text+0x18): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_3dd93.dir/build.make:86: recipe for target 'cmTC_3dd93' failed
+make[1]: *** [cmTC_3dd93] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_3dd93/fast' failed
+make: *** [cmTC_3dd93/fast] Error 2
+
+File /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_19ba7/fast"
+make -f CMakeFiles/cmTC_19ba7.dir/build.make CMakeFiles/cmTC_19ba7.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_19ba7.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_19ba7.dir/CheckFunctionExists.c.o   -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_19ba7
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTC_19ba7.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_19ba7.dir/CheckFunctionExists.c.o  -o cmTC_19ba7 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_19ba7.dir/build.make:86: recipe for target 'cmTC_19ba7' failed
+make[1]: *** [cmTC_19ba7] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_19ba7/fast' failed
+make: *** [cmTC_19ba7/fast] Error 2
+
+
+Checking whether C++ compiler has '__int64' failed to compile with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_96997/fast"
+make -f CMakeFiles/cmTC_96997.dir/build.make CMakeFiles/cmTC_96997.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_96997.dir/kwsysPlatformTestsCXX.cxx.o
+/usr/bin/g++  -DTEST_KWSYS_CXX_HAS___INT64   -o CMakeFiles/cmTC_96997.dir/kwsysPlatformTestsCXX.cxx.o -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:24:1: error: ‘__int64’ does not name a type; did you mean ‘__divtc3’?
+ __int64 f(__int64 n)
+ ^~~~~~~
+ __divtc3
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx: In function ‘int main()’:
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:30:3: error: ‘__int64’ was not declared in this scope
+   __int64 n = 0;
+   ^~~~~~~
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:30:3: note: suggested alternative: ‘__divtc3’
+   __int64 n = 0;
+   ^~~~~~~
+   __divtc3
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:31:29: error: ‘n’ was not declared in this scope
+   return static_cast<int>(f(n));
+                             ^
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:31:27: error: ‘f’ was not declared in this scope
+   return static_cast<int>(f(n));
+                           ^
+CMakeFiles/cmTC_96997.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_96997.dir/kwsysPlatformTestsCXX.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_96997.dir/kwsysPlatformTestsCXX.cxx.o] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_96997/fast' failed
+make: *** [cmTC_96997/fast] Error 2
+
+
+Checking whether CXX compiler has environ in stdlib.h failed to compile with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_42011/fast"
+make -f CMakeFiles/cmTC_42011.dir/build.make CMakeFiles/cmTC_42011.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_42011.dir/kwsysPlatformTestsCXX.cxx.o
+/usr/bin/g++  -DTEST_KWSYS_CXX_HAS_ENVIRON_IN_STDLIB_H   -o CMakeFiles/cmTC_42011.dir/kwsysPlatformTestsCXX.cxx.o -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx: In function ‘int main()’:
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:196:13: error: ‘environ’ was not declared in this scope
+   char* e = environ[0];
+             ^~~~~~~
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:196:13: note: suggested alternative: ‘union’
+   char* e = environ[0];
+             ^~~~~~~
+             union
+CMakeFiles/cmTC_42011.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_42011.dir/kwsysPlatformTestsCXX.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_42011.dir/kwsysPlatformTestsCXX.cxx.o] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_42011/fast' failed
+make: *** [cmTC_42011/fast] Error 2
+
+
+Checking whether CXX compiler struct stat has st_mtimespec member failed to compile with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_67a8a/fast"
+make -f CMakeFiles/cmTC_67a8a.dir/build.make CMakeFiles/cmTC_67a8a.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_67a8a.dir/kwsysPlatformTestsCXX.cxx.o
+/usr/bin/g++  -DTEST_KWSYS_CXX_STAT_HAS_ST_MTIMESPEC   -o CMakeFiles/cmTC_67a8a.dir/kwsysPlatformTestsCXX.cxx.o -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx: In function ‘int main()’:
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:57:15: error: ‘struct stat’ has no member named ‘st_mtimespec’; did you mean ‘st_mtim’?
+   (void)stat1.st_mtimespec.tv_sec;
+               ^~~~~~~~~~~~
+               st_mtim
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:58:15: error: ‘struct stat’ has no member named ‘st_mtimespec’; did you mean ‘st_mtim’?
+   (void)stat1.st_mtimespec.tv_nsec;
+               ^~~~~~~~~~~~
+               st_mtim
+CMakeFiles/cmTC_67a8a.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_67a8a.dir/kwsysPlatformTestsCXX.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_67a8a.dir/kwsysPlatformTestsCXX.cxx.o] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_67a8a/fast' failed
+make: *** [cmTC_67a8a/fast] Error 2
+
+
+Checking whether CXX compiler has _atoi64 failed to compile with the following output:
+Change Dir: /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aa183/fast"
+make -f CMakeFiles/cmTC_aa183.dir/build.make CMakeFiles/cmTC_aa183.dir/build
+make[1]: Entering directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_aa183.dir/kwsysPlatformTestsCXX.cxx.o
+/usr/bin/g++  -DTEST_KWSYS_CXX_HAS__ATOI64   -o CMakeFiles/cmTC_aa183.dir/kwsysPlatformTestsCXX.cxx.o -c /home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx: In function ‘int main()’:
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:252:27: error: ‘_atoi64’ was not declared in this scope
+   return static_cast<int>(_atoi64(str));
+                           ^~~~~~~
+/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/kwsysPlatformTestsCXX.cxx:252:27: note: suggested alternative: ‘atoi’
+   return static_cast<int>(_atoi64(str));
+                           ^~~~~~~
+                           atoi
+CMakeFiles/cmTC_aa183.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_aa183.dir/kwsysPlatformTestsCXX.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_aa183.dir/kwsysPlatformTestsCXX.cxx.o] Error 1
+make[1]: Leaving directory '/home/aisecurity/ai-kiosk/scripts/cmake-3.13.0/Source/kwsys/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_aa183/fast' failed
+make: *** [cmTC_aa183/fast] Error 2
+
+
