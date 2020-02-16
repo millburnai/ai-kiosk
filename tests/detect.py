@@ -14,7 +14,7 @@ print("Testing '{}'".format(args.test))
 tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))).__enter__()
 
 width, height = 640, 360
-cap = aisecurity.utils.visuals.get_video_cap(width, height, picamera=False, framerate=20, flip=0)
+cap = aisecurity.utils.visuals.get_video_cap(width, height, picamera=True, framerate=20, flip=0)
 
 if args.test == "embed":
     facenet = aisecurity.FaceNet()
