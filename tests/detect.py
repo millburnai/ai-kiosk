@@ -14,13 +14,14 @@ print("Testing '{}'".format(args.test))
 tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))).__enter__()
 
 width, height = 640, 360
-cap = aisecurity.utils.visuals.get_video_cap(width, height, picamera=True, framerate=20, flip=0)
 
 if args.test == "embed":
     facenet = aisecurity.FaceNet()
 elif args.test == "detect":
     aisecurity.face.detection.detector_init(min_face_size=int(0.5 * (width + height) / 2))
     # if min_face_size is not set to above, the detection speed decreases by 4x
+
+cap = aisecurity.utils.visuals.get_video_cap(width, height, picamera=True, framerate=20, flip=0)
 
 input("Press ENTER to continue: ")
 
@@ -35,7 +36,7 @@ while True:
         facenet.embed(cv2.resize(frame, (160, 160)))
 
     elif args.test == "detect":
-        cropped, face_coords = aisecurity.face.preprocessing.crop_face(frame, 10)
+        cropped, face_coords = aisecurity.face.preprocessing.crop_face(frame, 10, face_detector="haarcascade")
 
         elapsed = timer() - start
 
