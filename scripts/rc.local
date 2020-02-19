@@ -7,11 +7,13 @@ echo -e "\e93mProject Vice President: Liam Pilarski\033[0m"
 echo -e "\e94mContributors: Bruce Zhang, Mattia Calvetto, Nirvan Panjwani\033[0m"
 
 if [ ! -e /dev/video0 ] ; then
-	echo echo -e "\e96mWarning: camera device not found (/dev/video0 missing)";
+    echo echo -e "\e96mWarning: camera device not found (/dev/video0 missing)";
 else
-	echo "Camera device found"
+    echo "Camera device found"
 fi;
 
-sudo -H -u aisecurity /usr/bin/python3 /home/aisecurity/production/recognition.py
+sudo python3 -c "import scipy ; print(scipy.__file__)" 
+
+sudo /usr/bin/python3 /home/aisecurity/ai-kiosk/production/recognition.py
 
 exit 0
