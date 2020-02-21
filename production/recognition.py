@@ -15,7 +15,7 @@ def recognize(facenet, sec):
         raise Exception("{}s have elapsed, killing process".format(sec))
 
     def _recognize(facenet):
-        facenet.real_time_recognize(use_picam=True, flip=0, data_mutability=0, use_graphics=False)
+        facenet.real_time_recognize(use_picam=True, flip=0, data_mutability=0, use_lcd=True, use_graphics=False)
 
     signal.signal(signal.SIGALRM, handler)
     signal.alarm(sec)
@@ -27,4 +27,4 @@ def recognize(facenet, sec):
 
 if __name__ == "__main__":
     facenet = FaceNet()
-    recognize(facenet, sec=60)
+    recognize(facenet, sec=100)
