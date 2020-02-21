@@ -4,31 +4,27 @@ Production facial recognition script. Called on startup by /etc/rc.local
 
 """
 
-import functools
-import multiprocessing
+import signal
 
-import aisecurity
+from aisecurity import FaceNet, DEFAULT_MODEL
 
-def timeout(sec):
-    def _timeout(func):
-        @functools.wraps(func)
-        def _func(*args, **kwargs):
-            p = multiprocessing.Process(target=bar, args=args, kwargs=kwargs)
-            p.start()
 
-            p.join(sec)
+def recognize(facenet, sec):
 
-            if p.is_alive():
-                print("Killing func after {} seconds".format(sec))
+    def handler(signum, frame):
+        raise Exception("{}s have elapsed, killing process".format(sec))
 
-                p.terminate()
-                p.join()
+    def _recognize(facenet):
+        facenet.real_time_recognize(use_picam=False, flip=0, data_mutability=0, use_graphics=True)
 
-@timeout(sec=10)
-def recognize(facenet):
-    facenet.real_time_recognize(use_picam=True, flip=0, data_mutability=0, use_graphics=False)
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(sec)
 
+    try:
+        _recognize(facenet)
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
-    facenet = aisecurity.FaceNet("/home/aisecurity/.aisecurity/models/ms_celeb_1m.engine")
-    recognize(facenet)
+    facenet = FaceNet(DEFAULT_MODEL.replace("pb", "engine"))
+    recognize(facenet, sec=20)
