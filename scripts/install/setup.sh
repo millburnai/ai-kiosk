@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # "setup.sh": Downloads and sets up all necssary packages for Jetson Nano
 
+# ----- Assertions -----
+if [ ! -d /home/aisecurity ] ; then
+  exit 1
+fi
+
 # ----- Update and upgrade -----
 sudo apt update && sudo apt upgrade
 
@@ -26,7 +31,7 @@ sudo -H python3 -m pip install keras pycryptodome tqdm
 sudo -H python3 -m pip install adafruit-circuitpython-charlcd
 
 # ----- Database dependencies -----
-sudo -H python3 -m pip install Pyrebase requests mysql-connector-python
+sudo -H python3 -m pip install Pyrebase requests mysql-connector-python websocket
 
 # ----- Facial recognition and detection -----
 sudo -H python3 -m pip install mtcnn --no-dependencies
@@ -34,3 +39,17 @@ cd $HOME
 git clone "git+https://github.com/orangese/aisecurity.git@v0.9a"
 cd aisecurity
 sudo -H python3 -m pip install .
+
+# ----- Download ~/.aisecurity files -----
+cd $HOME
+sudo python3 -c "import aisecurity"
+sudo cp -a .aisecurity /root/.aisecurity
+
+# ----- Set up rc.local -----
+git clone "git+https://github.com/aisecurity/ai-kiosk.git"
+sudo cp ai-kiosk/scripts/rc.local /etc/rc.local
+
+sudo chmod +x ai-kiosk/production/recognition.py
+sudo chmod +x /etc/rc.local
+
+sudo systemctl enable rc-local
