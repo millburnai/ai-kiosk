@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
+# "pycuda_install.sh": Download and build pycuda from source
 
-# sudo apt-get install ctags
-# sudo apt-get install libboost-all-dev
-# sudo apt-get install build-essential python-dev python-setuptools libboost-python-dev libboost-thread-dev -y
-# sudo python3 -m pip install numpy
+sudo apt-get install ctags
+sudo apt-get install libboost-all-dev
+sudo apt-get install build-essential python-dev python-setuptools libboost-python-dev libboost-thread-dev -y
 
 TMP=$HOME/temp_dir
 mkdir $TMP

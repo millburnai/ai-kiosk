@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
+# "scipy_install.sh": Download and build cmake, curl, and scipy from source
 
 # prerequisites
-# sudo apt remove python3-numpy
-# sudo apt remove python3-scipy
-# sudo apt remove python3-sklearn
-
-# sudo python3 -m pip uninstall numpy scipy
-# sudo python3 -m pip uninstall sklearn
-# sudo python3 -m pip uninstall scikit-learn
-
-# sudo python3 -m pip install numpy
-
-# sudo apt-get update
-# sudo apt-get install -y build-essential libatlas-base-dev gfortran libfreetype6-dev python3-setuptools qt4-qmake libqt4-dev
+sudo apt-get update
+sudo apt-get install -y build-essential libatlas-base-dev gfortran libfreetype6-dev python3-setuptools qt4-qmake libqt4-dev
 
 TMP=$HOME/temp_dir
 mkdir $TMP
