@@ -17,6 +17,9 @@ sudo chmod +x *sh*
 ./opencv_install.sh
 # the above three lines will probably take 12+ hours
 
+sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev
+sudo -H python3 -m install grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
+sudo -H python3 -m pip install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow-gpu==1.15.0+nv20.1
 sudo -H python3 -m pip install keras pycryptodome tqdm
 
 # ----- Hardware dependencies -----
