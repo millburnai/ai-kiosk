@@ -2,11 +2,12 @@ import os
 import sys
 
 import aisecurity
+import cv2
 import tqdm
 
-PATH_TO_IMGS = "/Volumes/SentryK300/parsed_images/all"
-EMBED_FILE = "/Volumes/SentryK300/parsed_images/all"
-MISSED_FILE = "/Volumes/SentryK300/"
+PATH_TO_IMGS = "/Users/ryan/tmp/all"#"/Volumes/SentryK300/parsed_images/all"
+EMBED_FILE = "/Users/ryan/tmp/all/embed.json"#/Volumes/SentryK300/parsed_images/all"
+MISSED_FILE = "/Users/ryan/tmp/missed.txt"#"/Volumes/SentryK300/"
 
 class HidePrints(object):
 
@@ -20,26 +21,46 @@ class HidePrints(object):
 
 
 if __name__ == "__main__":
+    imgs = {}
     data = {}
-    missed =[]
+    missed = []
 
+    # gather imagfes
+    all_files = [os.path.join(PATH_TO_IMGS, img) for img in os.listdir(PATH_TO_IMGS)]
+    all_imgs = list(filter(lambda file: file.endswith("jpg") or file.endswith("png"), all_files))
+
+    print("Gathering images...")
+    with tqdm.trange(len(all_imgs)) as t:
+        for person in all_imgs:
+            img = cv2.imread(person)
+
+            if img is not None:
+                imgs[person] = img[:, :, ::-1]
+            else:
+                missed.append(person)
+                print("'{}' could not be read".format(person))
+
+            t.update()
+
+    # set up facenet
     facenet = aisecurity.FaceNet()
     facenet.set_dist_metric("euclidean")
 
     aisecurity.face.detection.detector_init()
 
-    all_imgs = os.listdir(PATH_TO_IMGS)
-    os.chdir(PATH_TO_IMGS)
-
-    with tqdm.trange(len(all_imgs)) as t:
-        for person in all_imgs:
+    # run embedding
+    print("Running embedding...")
+    with tqdm.trange(len(imgs)) as t:
+        for person, img in imgs.items():
             with HidePrints():
-                embed, face_coords = facenet.predict(person)
+                embed, face_coords = facenet.predict(img)
 
                 if face_coords == -1:
-                    embed, _ = facenet.predict(person, face_detector="haarcascade")
-
-                    if face_coords == -1:
+                    try:
+                        embed, _ = facenet.predict(img, face_detector="haarcascade")
+                        if face_coords == -1:
+                            raise AssertionError()
+                    except (cv2.error, AssertionError):
                         missed.append(person)
                         continue
 
