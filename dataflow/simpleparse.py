@@ -1,38 +1,19 @@
-"""
-
-"dataflow/simpleparse.py"
-
-Data parsing?
-
-"""
-
-import argparse
-from contextlib import contextmanager
-import signal
-
-# TIME LIMIT
-# ... why do we need this?
-class TimeoutException(Exception): pass
-
-@contextmanager
-def time_limit(seconds):
-    def signal_handler(signum, frame):
-        raise TimeoutException("Timed out!")
-
-    signal.signal(signal.SIGALRM, signal_handler)
-    signal.alarm(seconds)
-
-    try:
-        yield
-    finally:
-        signal.alarm(0)
-
-
 if __name__ == "__main__":
+
+    import os
+    import json
+    import argparse
+    import functools
+    import os
+    import shutil
+    import re
+    import warnings
+
     from aisecurity import FaceNet
-    from aisecurity.data.dataflow import dump_embeds, retrieve_embeds
+    from aisecurity.dataflow.data import dump_and_embed, retrieve_embeds
     from aisecurity.utils.paths import CONFIG_HOME
     from aisecurity.privacy.encryptions import *
+    #from aisecurity.utils.misc import time_limit, TimeoutException
 
     facenet = FaceNet(CONFIG_HOME + "/models/ms_celeb_1m.h5")
 
@@ -67,18 +48,19 @@ if __name__ == "__main__":
         directories = lambda x: os.path.isdir(os.path.join(img_dir, x))
 
         for position, dir in enumerate(filter(directories, os.listdir(img_dir))):
-            encrypted_data, no_faces = dump_embeds(facenet, os.path.join(img_dir, dir), dump_path,
-                            full_overwrite=True, mode=("w+" if position == 0 else "a+"), ignore_encrypt="all")
+            encrypted_data, no_faces = dump_and_embed(facenet, os.path.join(img_dir, dir), dump_path,
+                            full_overwrite=True, mode=("w+" if position == 0 else "a+"))
             dict_list.update(encrypted_data)
 
         with open(dump_path, 'w+') as json_file:
             json.dump(dict_list, json_file, indent=4, ensure_ascii=False)
 
+        '''
         if verify: 
             verify_data(dump_path, verify)
 
         send_to_dropbox()
-    
+        '''
     args = parser.parse_args()
 
     embed(args.img_dir, args.dump_path, args.verify)
