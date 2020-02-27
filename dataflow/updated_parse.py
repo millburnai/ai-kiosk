@@ -32,11 +32,10 @@ if __name__ == "__main__":
     print("Gathering images...")
     with tqdm.trange(len(all_imgs)) as t:
         for person in all_imgs:
-            img = cv2.imread(person)
-
-            if img is not None:
-                imgs[person] = img[:, :, ::-1]
-            else:
+            try:
+                img = cv2.imread(person)[:, :, ::-1]
+                imgs[person] = img
+            except TypeError:
                 missed.append(person)
                 print("'{}' could not be read".format(person))
 
@@ -64,7 +63,7 @@ if __name__ == "__main__":
                         missed.append(person)
                         continue
 
-                data[person] = embed
+                data[person[person.rfind("/") + 1:person.rfind(".")]] = embed
 
             t.update()
 
