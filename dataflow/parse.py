@@ -14,8 +14,9 @@ import re
 import warnings
 
 from aisecurity import FaceNet
-from aisecurity.data.dataflow import dump_embeds, retrieve_embeds
+from aisecurity.dataflow.loader import dump_and_embed, retrieve_embeds
 from aisecurity.utils.paths import CONFIG_HOME
+from aisecurity.face.detection import detector_init
 
 
 # HELPERS
@@ -117,15 +118,16 @@ def rename_imgs(img_dir, identifiers, new_img_dir=None):
 
 # EMBEDDING
 def embed(img_dir, dump_path, verify=False):
-    facenet = FaceNet(CONFIG_HOME + "/models/ms_celeb_1m.h5")
+    facenet = FaceNet(CONFIG_HOME + "/models/20180402-114759.pb")
     for obj in os.listdir(img_dir):
         if os.path.isdir(os.path.join(img_dir, obj)):
-            dump_embeds(facenet, os.path.join(img_dir, obj), dump_path,
-                        full_overwrite=True, ignore_encrypt="embeddings", mode="a")
+            dump_and_embed(facenet, os.path.join(img_dir, obj), dump_path, encrypt=None,
+                        full_overwrite=True, mode="a")
 
     if verify:
         print("Running facial recognition with new data to verify")
-        facenet.set_data(retrieve_embeds(dump_path, encrypted="names"))
+        print(dump_path)
+        facenet.set_data(retrieve_embeds(dump_path, encrypted=None))
         facenet.real_time_recognize(logging=None)
 
 
@@ -138,7 +140,7 @@ if __name__ == "__main__":
             return False
         else:
             raise argparse.ArgumentTypeError("boolean value expected")
-
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument("--index_path", help="path to index file", type=str)
     parser.add_argument("--img_dir", help="path to image directory", type=str)
@@ -157,3 +159,6 @@ if __name__ == "__main__":
     people = parse_index(args.index_path)
     rename_imgs(args.img_dir, get_info(args.filename_type, people), new_img_dir=args.new_img_dir)
     embed(args.new_img_dir, args.dump_path, verify=args.verify)
+    '''
+    detector_init(min_face_size=250)
+    embed("/Users/michaelpilarski/Desktop/parsed_images_copy", "/Users/michaelpilarski/Desktop/embeddings_.json", True)
