@@ -21,11 +21,15 @@ from aisecurity.face.detection import detector_init
 # EMBEDDING
 def embed(img_dir, dump_path, verify=False):
     facenet = FaceNet(CONFIG_HOME + "/models/20180402-114759.pb")
+    current_dir = os.getcwd()
     os.chdir(img_dir)
     os.mkdir("combined")
     for obj in os.listdir(img_dir):
         if not obj in ["combined", ".DS_Store"]:
             os.system("cp -R %s %s_ ; mv %s_/* combined ; rm -R %s_" % (4 * (obj,)))
+
+    os.chdir(current_dir)
+    os.system("sh divide.sh {} {}".format(img_dir+"/combined", 10))
 
     dump_and_embed(facenet, os.path.join(img_dir, "combined"), dump_path, encrypt=None,
                 full_overwrite=True, mode="a")
