@@ -6,7 +6,7 @@
 # Drivers for the camera and OpenCV are included in the base image
 
 import cv2
-from aisecurity.utils.visuals import Camera
+
 # gstreamer_pipeline returns a GStreamer pipeline for capturing from the CSI camera
 # Defaults to 1280x720 @ 60fps
 # Flip the image by setting the flip_method (most common values: 0 and 2)
@@ -16,10 +16,10 @@ from aisecurity.utils.visuals import Camera
 def gstreamer_pipeline(
     capture_width=1280,
     capture_height=720,
-    display_width=1280,
-    display_height=720,
-    framerate=60,
-    flip_method=0,
+    display_width=640,
+    display_height=360,
+    framerate=30,
+    flip_method=2,
 ):
     return (
         "nvarguscamerasrc ! "
@@ -29,8 +29,7 @@ def gstreamer_pipeline(
         "nvvidconv flip-method=%d ! "
         "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
         "videoconvert ! "
-        "video/x-raw, format=(string)BGR ! appsink "
-        "max-buffers=1 drop=True "
+        "video/x-raw, format=(string)BGR ! appsink"
         % (
             capture_width,
             capture_height,
@@ -44,18 +43,13 @@ def gstreamer_pipeline(
 
 def show_camera():
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-#    print(gstreamer_pipeline(flip_method=0))
-    #cap = cv2.VideoCapture(gstreamer_pipeline(display_width=640, display_height=360, flip_method=0), cv2.CAP_GSTREAMER)
-#    cap = cv2.VideoCapture(0)
-    cap = Camera()
-    # cap.release()
-    # cv2.destroyAllWindows()
-    # raise ValueError
-    if True: #cap.isOpened():
+    print(gstreamer_pipeline(flip_method=0))
+    cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+    if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_AUTOSIZE)
         # Window
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
-            retval, img = cap.read()
+            ret_val, img = cap.read()
             cv2.imshow("CSI Camera", img)
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF
